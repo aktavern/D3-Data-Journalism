@@ -35,11 +35,11 @@
 
     // create scales 
     var xScale = d3.scaleLinear()
-      .domain([0,d3.max(censusData, d => d.healthcare)])
+      .domain(d3.extent(censusData, d => d.poverty))
       .range([0, width]);
     
     var yScale = d3.scaleLinear()
-      .domain(d3.extent(censusData, d => d.poverty))
+      .domain(d3.extent(censusData, d => d.healthcare))
       .range([height,0]);
 
     // create axes 
@@ -59,19 +59,19 @@
       .data(censusData)
       .enter()
       .append("circle")
-      .attr("cx", d => xScale(d.healthcare))
-      .attr("cy",d => yScale(d.poverty))
-      .attr("r","15")
+      .attr("cx", d => xScale(d.poverty))
+      .attr("cy",d => yScale(d.healthcare))
+      .attr("r","12")
       .attr("fill","red")
-      .attr("opacity","0.5");
+      .attr("opacity",".6");
 
     // append text to circles
     chartGroup.selectAll()
       .data(censusData)
       .enter()
       .append('text')
-      .attr("x", d => xScale(d.healthcare) - 6)
-      .attr("y", d => yScale(d.poverty) + 4)
+      .attr("x", d => xScale(d.poverty) - 6)
+      .attr("y", d => yScale(d.healthcare) + 4)
       .attr("fill","white")
       .attr("font-size","10")
       .text(d => d.abbr)
@@ -79,9 +79,8 @@
     // create axes labels 
     chartGroup.append("text")
       .attr("transform","rotate(-90)")
-      .attr('y', 0 - margin.left + 40)
+      .attr('y', 0 - margin.left + 50)
       .attr("x", 0 - (height / 2))
-      .attr("dy", "1em")
       .attr("class","axisText")
       .text("Lacks Healthcare (%)")
     
