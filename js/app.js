@@ -61,9 +61,20 @@
       .append("circle")
       .attr("cx", d => xScale(d.healthcare))
       .attr("cy",d => yScale(d.poverty))
-      .attr("r","10")
+      .attr("r","15")
       .attr("fill","red")
       .attr("opacity","0.5");
+
+    // append text to circles
+    chartGroup.selectAll()
+      .data(censusData)
+      .enter()
+      .append('text')
+      .attr("x", d => xScale(d.healthcare) - 6)
+      .attr("y", d => yScale(d.poverty) + 4)
+      .attr("fill","white")
+      .attr("font-size","10")
+      .text(d => d.abbr)
 
     // create axes labels 
     chartGroup.append("text")
